@@ -1,13 +1,15 @@
-﻿using System.Net;
-using System.Net.Sockets;
-using System.Text;
+﻿using System.Diagnostics;
+using KeenNet;
 
-Console.WriteLine($"[Client]");
-Socket client = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080));
+try
+{
+    KeenNetClient client = new KeenNetClient("127.0.0.1", 8080);
+    string msg = $"This is a message from client [{Process.GetCurrentProcess().Id}]";
+    await client.SendAsync(msg);
 
-string msg = "This is a message from client";
-var buffer = Encoding.UTF8.GetBytes(msg);
-client.Send(buffer);
-
-Thread.Sleep(1000);
+    await Task.Delay(100 * 1000);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+}
