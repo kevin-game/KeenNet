@@ -11,6 +11,10 @@ public class TcpNetListener
     public TcpNetListener(int port)
     {
         _listener = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        _listener.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
+        _listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+        _listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+        
         _listener.Bind(new IPEndPoint(IPAddress.Parse("0.0.0.0"), port));
         _listener.Listen();
         StartAsync();

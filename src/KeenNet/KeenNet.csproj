@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.IO.Pipelines" Version="8.0.0-preview.3.23174.8" />
+  </ItemGroup>
+
 </Project>
