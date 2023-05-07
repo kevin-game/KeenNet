@@ -11,9 +11,12 @@ public class TcpNetListener
     public TcpNetListener(int port)
     {
         _listener = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        _listener.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
         _listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
         _listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+        // TODO
+        // _socket.Ttl = 32;//default 32. 0-256 is valid
+        // _socket.ReceiveBufferSize = 8192;//default 8192. Bigger maybe faster.
+        // _socket.SendBufferSize = 8192;//default 8192. Bigger maybe faster.
         
         _listener.Bind(new IPEndPoint(IPAddress.Parse("0.0.0.0"), port));
         _listener.Listen();

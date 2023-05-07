@@ -16,8 +16,12 @@ public class TcpNetClient
     public TcpNetClient(Socket socket)
     {
         _socket = socket;
-        _socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
         _socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+        _socket.NoDelay = true;
+        // TODO
+        // _socket.Ttl = 32;//default 32. 0-256 is valid
+        // _socket.ReceiveBufferSize = 8192;//default 8192. Bigger maybe faster.
+        // _socket.SendBufferSize = 8192;//default 8192. Bigger maybe faster.
         
         StartReceiveAsync();
     }
@@ -25,9 +29,13 @@ public class TcpNetClient
     public TcpNetClient(string ip, int port)
     {
         _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        _socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
         _socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
         _socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+        _socket.NoDelay = true;
+        // TODO
+        // _socket.Ttl = 32;//default 32. 0-256 is valid
+        // _socket.ReceiveBufferSize = 8192;//default 8192. Bigger maybe faster.
+        // _socket.SendBufferSize = 8192;//default 8192. Bigger maybe faster.
 
         _socket.Connect(IPAddress.Parse(ip), port);
         
